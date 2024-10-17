@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cajero Automático</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .alert {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cajero Automático</h1>
+        <div id="login">
+            <input type="text" id="username" placeholder="Usuario" required>
+            <input type="password" id="password" placeholder="Contraseña" required>
+            <button onclick="validateUser()">Iniciar Sesión</button>
+        </div>
+        <div id="operations" style="display:none;">
+            <h2>Operaciones</h2>
+            <button onclick="checkBalance()">Consultar Saldo</button>
+            <button onclick="deposit()">Consignar</button>
+            <button onclick="logout()">Cerrar Sesión</button>
+        </div>
+        <div id="deposit" style="display:none;">
+            <input type="number" id="amount" placeholder="Monto a consignar" required>
+            <button onclick="confirmDeposit()">Confirmar Consignación</button>
+        </div>
+    </div>
+
+    <script>
+        let balance = 0;
+
+        function validateUser() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Validación simple (puedes implementar tu propia lógica)
+            if (username === "user" && password === "1234") {
+                alert("¡Bienvenido!");
+                document.getElementById('login').style.display = 'none';
+                document.getElementById('operations').style.display = 'block';
+            } else {
+                alert("Usuario o contraseña incorrectos.");
+            }
+        }
+
+        function checkBalance() {
+            alert("Su saldo actual es: $" + balance);
+        }
+
+        function deposit() {
+            document.getElementById('operations').style.display = 'none';
+            document.getElementById('deposit').style.display = 'block';
+        }
+
+        function confirmDeposit() {
+            const amount = parseFloat(document.getElementById('amount').value);
+            if (isNaN(amount) || amount <= 0) {
+                alert("Por favor, ingrese un monto válido.");
+                return;
+            }
+            balance += amount;
+            alert("Se han consignado $" + amount + ". Saldo actual: $" + balance);
+            document.getElementById('amount').value = '';
+            document.getElementById('deposit').style.display = 'none';
+            document.getElementById('operations').style.display = 'block';
+        }
+
+        function logout() {
+            alert("¡Gracias por usar el cajero automático! Hasta pronto.");
+            location.reload();
+        }
+    </script>
+</body>
+</html>
